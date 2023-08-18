@@ -9,14 +9,35 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.5",
+    "@hookform/resolvers": "^3.2.0",
+    "@mui/icons-material": "^5.14.1",
+    "@mui/material": "^5.14.2",
+    "@prisma/client": "^5.0.0",
     "@types/node": "20.4.5",
     "@types/react": "18.2.17",
     "@types/react-dom": "18.2.7",
+    "ai": "^2.1.29",
+    "dotenv": "^16.3.1",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
+    "jotai": "^2.3.1",
     "next": "13.4.12",
+    "openai": "^3.3.0",
+    "openai-edge": "^1.2.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "5.1.6"
+    "react-hook-form": "^7.45.4",
+    "remark-html": "^15.0.2",
+    "resend": "^0.17.2",
+    "showdown": "^2.1.0",
+    "typescript": "5.1.6",
+    "yup": "^1.2.0"
+  },
+  "devDependencies": {
+    "@iconify/react": "^4.1.1",
+    "prisma": "^5.0.0"
   }
 }
