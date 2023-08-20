@@ -1,5 +1,6 @@
 import { Button } from "@mui/material"
 import React from "react"
+import { Color } from "./main-colors"
 
 interface ButtonProps {
     disabled?: boolean,
@@ -18,7 +19,7 @@ export const FormButton = (props: ButtonProps) => {
         autoCapitalize="none"
         sx={{
             height: '56px',
-            backgroundColor: '#FFC159',
+            backgroundColor: `${Color.primary}`,
             color: '#fff',
             fontWeight: 'semi-bold',
             fontSize: '18px',
@@ -26,6 +27,10 @@ export const FormButton = (props: ButtonProps) => {
             textTransform: 'none',
             boxShadow: 'none',
             mt: 3,
+            ":hover":{
+                backgroundColor: '#ECA15B',
+                boxShadow: 'none',
+            }
         }}
         >
             {props.children}

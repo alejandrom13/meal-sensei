@@ -22,6 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className} style={{
         backgroundColor: '#FEFCF6',
+        WebkitTapHighlightColor: 'transparent',
       }}>{children}</body>
     </html>
   )

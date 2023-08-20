@@ -7,7 +7,7 @@ import { FormButton } from "@/res/components/button"
 import { FormSelect } from "@/res/components/select"
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-
+import { FormCheckbox } from "@/res/components/checkbox"
 
 
 const schema = yup.object().shape({
@@ -15,9 +15,11 @@ const schema = yup.object().shape({
     email: yup.string().email('Correo electrónico inválido').required('Correo Electrónico es requerido'),
     age: yup.number().required('Edad es requerida').min(18, 'Minimo 18 años').max(99, 'Máximo 99 años').integer('Edad inválida').typeError('Edad inválida'),
     gender: yup.string().required('Género es requerido'),
+    termsAndConditions: yup.boolean().required('Términos y condiciones es requerido').oneOf([true], 'Términos y condiciones es requerido'),
+    receiveUpdates: yup.boolean()
 })
 
-export const PersonalInfo = ({handleNext}: any) => {
+export const PersonalInfoPage = ({handleNext}: any) => {
     
     const [personalInfo, setFormState] = useAtom(PersonalInfoAtom)
 
@@ -33,7 +35,8 @@ export const PersonalInfo = ({handleNext}: any) => {
 
     return (
         <div>
-        <h1>Personal Info</h1>
+        <h1>Ingresa tus datos</h1>
+        <br/>
 
         <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
             <FormInput
@@ -55,8 +58,11 @@ export const PersonalInfo = ({handleNext}: any) => {
             <FormInput
                 id='age'
                 label='Edad *'
+                
                 type='number'
                 control={control}
+                shrink
+                placeholder="Ingresa tu edad"
                 rules={{ required: "Edad es requerida", min: 18, max: 99, valueAsNumber: true, message: "Edad inválida" }}
             />
 
@@ -87,35 +93,21 @@ export const PersonalInfo = ({handleNext}: any) => {
             </table> */}
 
    
-        <FormControlLabel
-            control={
-              <Checkbox  name="gilad" />
-            }
-            label={
-                <p style={{
-                    fontSize: '14px',
-                }}>Al continuar estas de acuerdo con los <a href="/">términos y condiciones</a>, política de privacidad</p>
-            }
-            sx={{
-                mb: -1,
-            }}
-          />
+            <FormCheckbox
+                id="termsAndConditions"
+                label="Al continuar estas de acuerdo con los términos y condiciones, política de privacidad *"
+                control={control}
+                rules={{ required: "Términos y condiciones es requerido" }}
+                //placeholder="Selecciona tu género"
+             />
 
-        <FormControlLabel
-            control={
-              <Checkbox  name="gilad" />
-            }
-            label={
-                <p  style={{
-                    fontSize: '14px',
-                }}>Me gustaría recibir actualizaciones sobre productos y servicios, y newsletter por correo.</p>
-            }
-          />
-
-
-
-
-            
+            <FormCheckbox
+                id="receiveUpdates"
+                label="Me gustaría recibir actualizaciones sobre productos y servicios, y newsletter por correo."
+                control={control}
+                rules={{ required: "Términos y condiciones es requerido" }}
+                //placeholder="Selecciona tu género"
+             />
 
             <FormButton type="submit">
                 Continuar

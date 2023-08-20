@@ -28,11 +28,17 @@ export const FormSelect = ({id, control, label, type, placeholder, disabled, rul
                     }}>
                     <InputLabel id={id}
                     sx={{
-                        
-                    }}>{label}</InputLabel>
+                        color: error ? '#B83B27!important' : '#666666!important',
+                        ":focus":{
+                            color: '#3761BF!important',
+                        }
+                    }}
+                    >{label}</InputLabel>
                     <Select
                         type={type}
                         placeholder={placeholder}
+                        labelId={id}
+                        id={id}
                         //name={id}
                         disabled={disabled}
                         //helperText={error ? error.message : null}

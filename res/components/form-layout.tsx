@@ -6,7 +6,7 @@ export interface LayoutProps {
 
 export const FormLayout = ({children}:LayoutProps) => {
     return (
-        <Container maxWidth="sm" sx={{
+        <Container maxWidth="sm" sx={{paddingBottom: '2rem'
         }} >
             {children}
         </Container>

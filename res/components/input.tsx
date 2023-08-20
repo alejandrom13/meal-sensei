@@ -13,10 +13,13 @@ interface FormInputProps {
   disabled?: boolean
   rules?: any
   required?: boolean
+  adornment?: string
+  maxLength?: number
+  shrink?: boolean
 
 }
 
-export const FormInput = ({ id, control, label, type, placeholder, disabled, rules, required  }: FormInputProps) => {
+export const FormInput = ({ id, control, label, type, placeholder, disabled, rules, required, adornment, shrink  }: FormInputProps) => {
   return (
     <Controller
       name={id}
@@ -30,7 +33,10 @@ export const FormInput = ({ id, control, label, type, placeholder, disabled, rul
                 borderRadius: 2.5,
                 //height: '56px',
                 backgroundColor: '#fff',
-            }
+                
+
+            },
+            ...(adornment && {endAdornment: <InputAdornment position="start">{adornment}</InputAdornment>})
           }}
           type={type}
           placeholder={placeholder}
@@ -45,6 +51,9 @@ export const FormInput = ({ id, control, label, type, placeholder, disabled, rul
           variant='outlined'
           sx={{
             mb: 2,
+          }}
+          InputLabelProps={{
+            shrink: shrink,
           }}
         />
       )}
