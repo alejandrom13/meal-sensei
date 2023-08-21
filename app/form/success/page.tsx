@@ -7,7 +7,8 @@ const SucessPage = () => {
     return (
         <div>
             <FormLayout>
-            <Box display={"flex"} justifyContent={"center"} alignItems={"center"} width={"100%"} height={"100%"}>
+            <Box display={"flex"} alignItems={"center"} width={"100%"} height={"100%"} paddingLeft={7}>
+                
                 <LoadingAnimation/>
            
                 </Box>

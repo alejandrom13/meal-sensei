@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import styles from './page.module.css'
 import { Button, Container, TextField } from '@mui/material'
+import { LandingLayout } from './landing/layout'
 
 export default function Home() {
 
@@ -27,49 +28,10 @@ export default function Home() {
 
   return (
     <main>
-      <Container maxWidth="sm">
-        <h1>Meal sensei</h1>
 
-        <form onSubmit={handleSubmit}>
-        <TextField id="name" name='name' label="Nombre" variant="outlined" fullWidth sx={
-          {
-            paddingBottom: '1rem'
-          }
-        }/>
-        <TextField id="email" name='email' label="Correo Electrónico" variant="outlined" fullWidth sx={
-          {
-            paddingBottom: '1rem'
-          }
-        }/>        
-        <TextField id="weight" name='weight' label="Peso" variant="outlined" fullWidth sx={
-          {
-            paddingBottom: '1rem'
-          }
-        }/>
-          <TextField id="weight_goal" name='weight_goal' label="Meta de peso" variant="outlined" fullWidth sx={
-          {
-            paddingBottom: '1rem'
-          }
-        }/>
-          <TextField id="age" label="Edad" name='age' variant="outlined" fullWidth sx={
-          {
-            paddingBottom: '1rem'
-          }
-        }/>
-                  <TextField id="gender" name='gender' label="Genero" variant="outlined" fullWidth sx={
-          {
-            paddingBottom: '1rem'
-          }
-        }/>
+      <LandingLayout></LandingLayout>
 
-        <Button color='primary' type='submit' variant='outlined' fullWidth sx={{
-          height: '50px'
-        }}>
-          Enviar
-        </Button>
-        </form>
 
-      </Container>  
     </main>
   )
 }

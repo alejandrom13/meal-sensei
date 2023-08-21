@@ -1,4 +1,5 @@
 export const Color = {
-    primary: '#FFAE64',
+    primary: '#FB8A4D',
     secondary: '#FFC159',
+    hoverPrimary: '#FF9635',
 }

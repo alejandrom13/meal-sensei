@@ -25,7 +25,7 @@ export const LoadingAnimation = () => {
       }, []);
 
     return (
-        <div id="loading-animation" style={{width: '60%', height: '60%'}}></div>
+        <div id="loading-animation" style={{width: '80%', height: '80%'}}></div>
     )
 
 }
