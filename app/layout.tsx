@@ -17,13 +17,14 @@ export const metadata: Metadata = {
 const siteId = 3621680;
 const hotjarVersion = 6;
 
-Hotjar.init(siteId, hotjarVersion);
+
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  Hotjar.init(siteId, hotjarVersion);
   return (
     <html lang="en">
       <body className={inter.className} style={{
