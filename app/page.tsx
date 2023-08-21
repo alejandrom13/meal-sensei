@@ -7,10 +7,10 @@ import Hotjar from '@hotjar/browser'
 
 export default function Home() {
 
-  const siteId = 3621680;
-  const hotjarVersion = 6;
-  Hotjar.init(siteId, hotjarVersion);
-  
+  // const siteId = 3621680;
+  // const hotjarVersion = 6;
+  // Hotjar.init(siteId, hotjarVersion);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
@@ -35,7 +35,17 @@ export default function Home() {
     <main>
 
       <LandingLayout></LandingLayout>
-
+<script
+   dangerouslySetInnerHTML={
+                 {
+     __html: `
+     (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "iisigj26dq");`,
+   }}
+ />;
 
     </main>
   )
