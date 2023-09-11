@@ -3,13 +3,13 @@ import Image from 'next/image'
 import styles from './page.module.css'
 import { Button, Container, TextField } from '@mui/material'
 import { LandingLayout } from './landing/layout'
-import Hotjar from '@hotjar/browser'
+// import Hotjar from '@hotjar/browser'
 
 export default function Home() {
 
-  const siteId = 3621680;
-  const hotjarVersion = 6;
-  Hotjar.init(siteId, hotjarVersion);
+  // const siteId = 3621680;
+  // const hotjarVersion = 6;
+  // Hotjar.init(siteId, hotjarVersion);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

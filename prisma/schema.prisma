@@ -11,7 +11,45 @@ datasource db {
 }
 
 model User {
+  id                  String      @id @default(uuid())
+  email               String      @unique
+  name                String
+  age                 Int
+  gender              String
+  termsAndConditions  Boolean
+  receiveUpdates      Boolean?
+  goal                String
+  weight              Int
+  height              String
+  weightGoal          String
+  diets               Diet[]
+  payments            Payment[]
+  status              String      @default("A")
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+  deletedAt           DateTime?   
+  
+}
+
+model Diet {
+  id        Int      @id @default(autoincrement())
+  diet      Json
+  user      User     @relation(fields: [email], references: [email])
+  email    String
+  payment   Payment?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Payment {
   id       Int      @id @default(autoincrement())
-  email    String   @unique
-  name     String?
+  paypalId String   @unique
+  user     User     @relation(fields: [email], references: [email])
+  email   String
+  diet     Diet?     @relation(fields: [dietId], references: [id])
+  dietId   Int?    @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
 }
