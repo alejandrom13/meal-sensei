@@ -1,8 +1,4 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import {
-    PAYPAL_API_CLIENT,
-} from "@/app/config";
-
 import { useRouter } from "next/navigation";
 
 import { Box, Card, Divider, Grid, Typography } from "@mui/material";
@@ -10,11 +6,9 @@ import { Box, Card, Divider, Grid, Typography } from "@mui/material";
 import { useAtom } from "jotai";
 import { PersonalInfoAtom } from "../form-state";
 import { useState } from "react";
-import { GetDiet } from "@/app/api/ai/unroute";
-import { POST } from "@/app/api/ai/route";
 import {CircularProgress} from "@mui/material";
 import { FormButton } from "@/res/components/button";
-import { set } from "react-hook-form";
+
 
 const sendData = async (diet: any, payment: any, dietDays: string) => {
     try {

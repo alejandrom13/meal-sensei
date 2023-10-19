@@ -1,12 +1,8 @@
 import { FormButton } from "@/res/components/button"
-import { FormCheckbox } from "@/res/components/checkbox"
-import { yupResolver } from "@hookform/resolvers/yup"
 import { Checkbox, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material"
 import { useAtom } from "jotai"
-import { useForm } from "react-hook-form"
 import { PersonalInfoAtom } from "../form-state"
-import * as yup from 'yup'
-import React, { use, useEffect, useState } from "react"
+import React from "react"
 
   const dietList = [
     {name: "Soy Vegano (a)", checked: false },
