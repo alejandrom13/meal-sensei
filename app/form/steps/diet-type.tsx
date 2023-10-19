@@ -1,35 +1,37 @@
 import { FormButton } from "@/res/components/button"
-import { FormCheckbox } from "@/res/components/checkbox"
-import { yupResolver } from "@hookform/resolvers/yup"
 import { Checkbox, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material"
 import { useAtom } from "jotai"
-import { useForm } from "react-hook-form"
 import { PersonalInfoAtom } from "../form-state"
-import * as yup from 'yup'
 import React from "react"
 
-const dietList = [
-    'Soy Vegano (a)',
-    'Soy Vegetariano (a)',
-    'Sin Gluten',
-    'Sin Lactosa',
-    'Sin Azúcar',
-]
+  const dietList = [
+    {name: "Soy Vegano (a)", checked: false },
+    {name: "Soy Vegetariano (a)", checked: false },
+    {name: "Sin Gluten", checked: false },
+    {name: "Sin Lactosa", checked: false },
+    {name: "Sin Azúcar", checked: false },
+  ]
 
 export const DietTypePage = ({handleNext}:any) => {
     const [checked, setChecked] = React.useState([null as unknown as number]);
+    const [selDiet, setDiet] = useAtom(PersonalInfoAtom);
+    console.log(selDiet);
 
     const handleToggle = (value: number) => () => {
-      const currentIndex = checked.indexOf(value);
-      const newChecked = [...checked];
-  
-      if (currentIndex === -1) {
-        newChecked.push(value);
-      } else {
-        newChecked.splice(currentIndex, 1);
-      }
-  
-      setChecked(newChecked);
+      setDiet({
+        ...selDiet,
+        dietPreferences: selDiet.dietPreferences.map((diet, index) => {
+          if (index === value) {
+            return {
+              ...diet,
+              checked: !diet.checked,
+            };
+          }
+          return diet;
+        }),
+      });
+
+      console.log(selDiet);
     };
     return (
         <div>
@@ -39,9 +41,11 @@ export const DietTypePage = ({handleNext}:any) => {
             <br/>
 
             <List sx={{ width: '100%' }}>
-      {dietList.map((value, index) => {
+      {selDiet.dietPreferences.map((value, index) => {
         const labelId = `checkbox-list-label-${value}`;
-        const count = dietList.length - 1
+        const count = dietList.length -1
+        
+        
 
         return (
           <ListItem
@@ -51,12 +55,12 @@ export const DietTypePage = ({handleNext}:any) => {
             divider
           >
             <ListItemButton role={undefined} onClick={handleToggle(index)} disableGutters disableTouchRipple>
-            <ListItemText id={labelId} primary={value}/>
+            <ListItemText id={labelId} primary={value.name}/>
 
               <ListItemIcon>
                 <Checkbox
                   edge="end"
-                  checked={checked.indexOf(index) !== -1}
+                  checked={value.checked}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ 'aria-labelledby': labelId }}

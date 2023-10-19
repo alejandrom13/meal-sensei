@@ -17,6 +17,7 @@ export const FormButton = (props: ButtonProps) => {
         variant='contained'
         fullWidth
         autoCapitalize="none"
+        disableRipple
         sx={{
             height: '56px',
             backgroundColor: `${Color.primary}`,

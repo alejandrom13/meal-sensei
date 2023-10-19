@@ -1,0 +1,21 @@
+{
+  "dia-1": {
+    "desayuno": ["Tortilla de claras de huevo con espinacas y queso bajo en grasa", "Pan integral tostado con aguacate", "Jugo de naranja natural"],
+    "almuerzo": ["Ensalada de pollo a la parrilla con verduras mixtas", "Arroz integral", "Fresas como postre"],
+    "merienda": ["Yogur griego bajo en grasa con nueces", "Una manzana"],
+    "cena": ["Salmón a la parrilla con espárragos", "Puré de papas", "Ensalada de tomate y pepino"],
+  },
+  "dia-2": {
+    "desayuno": ["Batido de proteína con leche de almendras, plátano y mantequilla de maní", "Pan integral con mermelada sin azúcar"],
+    "almuerzo": ["Pechuga de pollo a la plancha con quinoa", "Brócoli al vapor", "Piña como postre"],
+    "merienda": ["Hummus con zanahorias y apio", "Un puñado de almendras"],
+    "cena": ["Tacos de pescado con tortillas de maíz", "Ensalada de col", "Mango como postre"],
+  },
+  "dia-3": {
+    "desayuno": ["Avena con leche descremada, frutas y nueces", "Tostadas de pan integral con mermelada sin azúcar"],
+    "almuerzo": ["Ensalada de atún con garbanzos", "Papas al horno", "Sandía como postre"],
+    "merienda": ["Batido de proteína con leche de almendras y bayas mixtas", "Una pera"],
+    "cena": ["Pollo al horno con vegetales mixtos", "Quinoa", "Ensalada de espinacas"],
+  },
+  "recomendaciones": ["Mantén una hidratación adecuada bebiendo al menos 8 vasos de agua al día.", "Realiza ejercicio físico regularmente para ayudar en el proceso de aumento de peso.", "Incluye alimentos ricos en proteínas en cada comida para favorecer el desarrollo muscular.", "Evita el consumo excesivo de alimentos procesados y azúcares refinados.", "Consulta a un nutricionista para un plan personalizado y ajustado a tus necesidades."]
+}
