@@ -21,7 +21,27 @@ export interface IDiet {
   weightGoal: string;
   weightType: string;
   heightType: string;
-  dietPreferences: string[];
+  dietPreferences: [
+    {
+      name: string;
+      checked: boolean;
+    }
+  ];
+}
+
+const isFreeUser= async (email: string) => {
+  const prisma = new PrismaClient();
+  const user = await prisma.user.findUnique({
+      where: {
+          email: email
+      }
+  });
+
+  if(user?.plan === 'free'){
+      return true;
+  } else {
+      return false;
+  }
 }
 
 
@@ -46,7 +66,6 @@ const convertStringToHTML = (htmlString: any) => {
 //** SAVE ALL */
 const saveAll = async (payment: any, createdDiet:any, diet: IDiet) => {
     const prisma = new PrismaClient();
-
     //save diet
     await prisma.diet.create({
         data:{
@@ -65,15 +84,18 @@ const saveAll = async (payment: any, createdDiet:any, diet: IDiet) => {
           console.log(err);
       })
 
-    //save payment
-    await prisma.payment.create({
-        data: {
-            email: diet?.email,
-            paypalId: payment?.id,
-            dietId: dietId?.[0].id
-        }
+      if(payment !== null){
+        await prisma.payment.create({
+            data: {
+                email: diet?.email,
+                paypalId: payment?.id,
+                dietId: dietId?.[0].id
+            }
+    
+        });
 
-    });
+      }
+
 
 }
 
@@ -86,6 +108,22 @@ export async function POST(req: Request) {
   console.log("THIS IS THE BODY:!!!!",data)
   const diet: IDiet = data.diet;
   const payment = await data.payment;
+  const days = data.dietDays;
+
+  const isFree = await isFreeUser(diet?.email);
+
+
+  if (isFree && payment === null){
+    console.log("free userrrrrrrrr")
+    return NextResponse.json(
+      'free_user'
+    )
+  }
+  
+const dietPreferencesString = diet?.dietPreferences.filter(item => item.checked === true)
+                                                   .map(item => item.name)
+                                                   .join(', ');
+
 
   const prisma = new PrismaClient();
   const resend = new Resend(process.env.RESEND_API_KEY);
@@ -98,36 +136,39 @@ export async function POST(req: Request) {
       messages: [
         {
           "role": "system",
-          "content": `Eres un nutricionista profesional que crea planes nustricionales y da recomendaciones en formato json(asegurate que el formato esté correcto para parsear). \n
-          Usas la siguiente estructura: \n
-          dia-#:{
-            desayuno: [],
-            almuerzo: [],
-            merienda: [],
-            cena: []
-          },
-          recomendaciones: []`
+          "content": `Eres un nutricionista profesional que crea planes nustricionales y da recomendaciones en formato json(asegurate que el formato esté correcto para parsear y evitar errores). \n
+          Usa la siguiente estructura:
+          {
+            dia-#:{
+              desayuno: [],
+              almuerzo: [],
+              merienda: [],
+              cena: []
+            },
+            recomendaciones: []
+          }`
         },
           {
             "role": "user",
-           "content": `Generame un plan nutricional de 3 días segun el siguiente perfil y agrega recomendaciones.\n
-                          ${diet?.age} años, género: ${diet?.gender} peso: ${diet?.weight} libras, meta: ${diet?.weightGoal} libras
+           "content": `Generame un plan nutricional de ${days} días segun el siguiente perfil y agrega recomendaciones.\n
+                          ${diet?.age} años, género: ${diet?.gender} peso: ${diet?.weight} libras, meta: ${diet?.weightGoal} libras y mis preferencias son: ${dietPreferencesString}
                           `},
       ]
     });
   
     const stringRes = response.data.choices[0].message?.content;
+    console.log(stringRes);
   
     const jsonRes = JSON.parse(stringRes!);
     // console.log(jsonRes);
 
     // // Resend the response to the user
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: 'diet@mealsensei.app',
       to: `${diet?.email}`,
-      subject: '🥕 Meal Sensei - Plan nutricional de 7 días',
+      subject: `🥕 Meal Sensei - Plan nutricional de ${days} días`,
       text: '',
-      react: EmailTemplate({ plan: jsonRes })
+      react: EmailTemplate({ plan: jsonRes, days: days })
       
     });
       
@@ -138,9 +179,25 @@ export async function POST(req: Request) {
           email: diet?.email
       }
     })){
+      console.log("user exists....")
+
+
+      //if user exists we update it
+      await prisma.user.update({
+        where: {
+          email: diet?.email
+        },
+        data:{
+            plan: (days === '7' ? 'weekly' : 'free'),
+        }
+      })
       await saveAll(payment!, jsonRes, diet!);
   
-    } else {
+    } 
+    //else we create it
+    else {
+      console.log("user not exists....")
+
         await prisma.user.create({
           data: {
               email: diet?.email,
@@ -151,6 +208,7 @@ export async function POST(req: Request) {
               weightGoal: diet?.weightGoal.toString(),
               height: diet?.heightFeet + "ft " + diet.heightInches + "in",
               goal: diet?.dietGoal,
+              plan: (days === '7' ? 'weekly' : 'free'),
               termsAndConditions: diet?.termsAndConditions,
               receiveUpdates: diet?.receiveUpdates,
           }

@@ -47,7 +47,15 @@ export const PersonalInfoAtom = atomWithStorage('personalInfo',{
     heightType: 'pies',
 
     //* Diet Preferences
-    dietPreferences: [],
+    hola:"hola",
+    dietPreferences: [
+        {name: "Soy Vegano (a)", checked: false },
+        {name: "Soy Vegetariano (a)", checked: false },
+        {name: "Sin Gluten", checked: false },
+        {name: "Sin Lactosa", checked: false },
+        {name: "Sin Azúcar", checked: false },
+    ]
+    ,
 
 })
 

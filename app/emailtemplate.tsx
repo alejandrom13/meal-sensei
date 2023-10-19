@@ -10,7 +10,7 @@ import {Preview} from '@react-email/preview';
 import {Row} from '@react-email/row';
 import {Section} from '@react-email/section';
 import {Text} from '@react-email/text';
-import logo from '@/res/svg/logo.svg'
+import logo from '@/res/png/logo-meal-sensei.png'
 
 import { Button } from '@react-email/button';
 
@@ -21,26 +21,27 @@ interface EmailTemplateProps {
   //userProfile: any;
   body?: any;
   plan: any;
+  days: string;
 }
 
-export const EmailTemplate = ({ body, plan}: EmailTemplateProps) => {
+export const EmailTemplate = ({ body, plan, days}: EmailTemplateProps) => {
   return (
 
     <Html>
       <Head />
-      <Preview>Tu plan nutricional de 7 días está listo.</Preview>
+      <Preview>Tu plan nutricional de {days} días está listo.</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={logoContainer}>
-            <img
-              src={logo}
+            <Img
+              src={logo.src}
               height="40"
               alt="meal-sensei"
             />
           </Section>
           <Heading style={h1}>Gracias por tu compra!</Heading>
           <Text style={heroText}>
-            Tu plan nutricional de <strong>7 días</strong> está listo.
+            Tu plan nutricional de <strong>{days} días</strong> está listo.
           </Text>
   
           {Object.keys(plan).map((day, index) => {

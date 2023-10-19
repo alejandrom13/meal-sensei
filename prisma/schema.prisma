@@ -22,6 +22,7 @@ model User {
   weight              Int
   height              String
   weightGoal          String
+  plan                String?
   diets               Diet[]
   payments            Payment[]
   status              String      @default("A")
