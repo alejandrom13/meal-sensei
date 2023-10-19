@@ -13,7 +13,7 @@ function initializeClarity() {
     const l: Document = document;
     const a: string = "clarity";
     const r: string = "script";
-    const i: string = "jb6qs32nvs";
+    const i: string = "iisigj26dq";
 
     c[a] = c[a] || function () {
       (c[a].q = c[a].q || []).push(arguments);
