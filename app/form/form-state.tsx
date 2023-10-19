@@ -31,6 +31,7 @@ export const PersonalInfoAtom = atomWithStorage('personalInfo',{
     //* State of the user
     name: '',
     email: '',
+    emailConfirmation: '',
     age: null as unknown as number,
     gender: '',
     termsAndConditions: false,
