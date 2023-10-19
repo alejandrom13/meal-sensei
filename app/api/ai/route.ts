@@ -165,10 +165,9 @@ const dietPreferencesString = diet?.dietPreferences.filter(item => item.checked 
   
       // // Resend the response to the user
       await resend.emails.send({
-        from: 'diet@mealsensei.app',
-        to: `${diet?.email}`,
+        from: 'MealSensei <diet@mealsensei.app>',
+        to: [`${diet?.email}`],
         subject: `🥕 Meal Sensei - Plan nutricional de ${days} días`,
-        text: '',
         react: EmailTemplate({ plan: jsonRes, days: days })
         
       });

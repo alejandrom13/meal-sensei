@@ -34,7 +34,7 @@ export const EmailTemplate = ({ body, plan, days}: EmailTemplateProps) => {
         <Container style={container}>
           <Section style={logoContainer}>
             <Img
-              src={logo.src}
+              src='https://firebasestorage.googleapis.com/v0/b/jobswipe-d1e46.appspot.com/o/logo_for_email.png?alt=media&token=fd37a3a2-d095-4680-aa5f-b2b8951c8b70&_gl=1*lkxqzw*_ga*MTY3NzYwMTUyNy4xNjg3MDI1NTI0*_ga_CW55HF8NVT*MTY5NzcyNTY1OS41My4xLjE2OTc3MjU2OTEuMjguMC4w'
               height="40"
               alt="meal-sensei"
             />

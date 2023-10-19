@@ -1,15 +1,37 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useRouter } from "next/navigation";
 
-import { Box, Card, Divider, Grid, Typography } from "@mui/material";
+import { Alert, Box, Button, Card, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Slide, Typography } from "@mui/material";
 
 import { useAtom } from "jotai";
-import { PersonalInfoAtom } from "../form-state";
-import { useState } from "react";
+import { PersonalInfoAtom, formStateAtom, handleBackArrow } from "../form-state";
+import { useEffect, useState } from "react";
 import {CircularProgress} from "@mui/material";
 import { FormButton } from "@/res/components/button";
+import { set } from "react-hook-form";
+import { TransitionProps } from "@mui/material/transitions";
+import React from "react";
+import { get } from "http";
 
 
+const coolMessages = [
+    "¡Estamos creando tu plan nutricional!",
+    "La paciencia es una virtud...",
+    "En breve, lo mejor está por venir.",
+    "¡Gracias por esperar!",
+    "Cargando...",
+    "¡Estamos casi listos!",
+  ];
+
+const Transition = React.forwardRef(function Transition(
+    props: TransitionProps & {
+      children: React.ReactElement<any, any>;
+    },
+    ref: React.Ref<unknown>,
+  ) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+  
 const sendData = async (diet: any, payment: any, dietDays: string) => {
     try {
         const res = await fetch('api/ai', {
@@ -31,8 +53,11 @@ const sendData = async (diet: any, payment: any, dietDays: string) => {
     }
 }
 
+
+
 const initialOptions = {
-    clientId: "AffbbQb2Bt5WWXDmGqtHGE22kDBtctWyTC_gXw7VAThVRlqgz1S8atHkLGU65WHKmEbfMi3NVavEJNL_",
+    //production key
+    clientId: "AXoZ7ZSF1_iq9XWNf05Qv4qzfC1kHgo_a80s6tSLLz1N0LCLvR7ILwDH53xgaz6N-WiHWN0p3WrAgZln",
     currency: "USD",
     intent: "capture",
     
@@ -43,8 +68,21 @@ export const PaymentPage = ({handleNext}:any) => {
     const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter();
     const [error, setError] = useState(false);
+    const [handleBack, setHandleBack] = useAtom(handleBackArrow);
 
-    
+
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+
+      setOpen(true);
+
+
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
     return (
         loading ? 
         <div>
@@ -106,11 +144,11 @@ export const PaymentPage = ({handleNext}:any) => {
                 
                 const order = await actions.order?.capture().then((data)=>{
                     setLoading(true);
+                   
                     sendData(personalInfo, data, '7').then((data)=>{
-                           
                             router.push('/form/success');
-                            setLoading(false);
-                        
+                    }).then(()=>{
+                        setLoading(false);
                     })
 
                 })
@@ -135,21 +173,73 @@ export const PaymentPage = ({handleNext}:any) => {
              {error ? <Typography variant='body1' color={'red'}>Este plan solo está limitado a 1 dieta por correo</Typography> : null}
              
              <FormButton onClick={()=>{
-                setLoading(true);
+                handleClickOpen();
                 sendData(personalInfo, null, '3').then((data)=>{
                     
                     if(data === "free_user"){
                         setError(true);
-                        setLoading(false);
+                        handleClose();
                     } else {
                         router.push('/form/success');
-                        setLoading(false);
                     }
-        
+                }).then(()=>{
+                    setLoading(false);
                 })
              }}>Continuar</FormButton>
 
           </Card>
+
+          <Dialog
+        open={open}
+        TransitionComponent={Transition}
+             fullScreen
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        sx={{
+            '& .MuiDialog-paper': {
+                backgroundColor: '#FDFCF5',
+                boxShadow: 'none',
+            }
+        
+        }}
+      >
+        <DialogContent>
+        <div>
+
+        <Box sx={{  mt: 10, mb: 0, padding: 2}}>
+  
+  <Container maxWidth='sm'
+    sx={{
+      pt: 1,
+      pb: 2,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center',
+
+    }}>
+
+  <CircularProgress size={110} thickness={0.5} sx={{
+      color: '#000',
+      mb: 3}} />
+
+  <Typography sx={{ color: '', mt: 0, mb: 3, fontSize:'24px', fontWeight:'300' }}>
+  ¡Estamos creando tu plan nutricional!
+    </Typography>
+    <Alert sx={{
+        
+    }} severity="warning">No cierres la pagina.</Alert>
+
+  </Container>
+    
+
+</Box>
+        
+        </div> 
+        </DialogContent>
+
+      </Dialog>
 
      
 
