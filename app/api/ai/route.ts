@@ -125,101 +125,107 @@ const dietPreferencesString = diet?.dietPreferences.filter(item => item.checked 
                                                    .join(', ');
 
 
-  const prisma = new PrismaClient();
-  const resend = new Resend(process.env.RESEND_API_KEY);
-  console.log(resend)
 
-    // Ask OpenAI for a streaming completion given the prompt
-    const response = await openai.createChatCompletion({
-      model: 'gpt-3.5-turbo',
-       temperature: 0.6,
-      messages: [
-        {
-          "role": "system",
-          "content": `Eres un nutricionista profesional que crea planes nustricionales y da recomendaciones en formato json(asegurate que el formato esté correcto para parsear y evitar errores). \n
-          Usa la siguiente estructura:
+  try {
+    const prisma = new PrismaClient();
+    const resend = new Resend(process.env.RESEND_API_KEY);
+  
+      // Ask OpenAI for a streaming completion given the prompt
+      const response = await openai.createChatCompletion({
+        model: 'gpt-3.5-turbo',
+         temperature: 0.6,
+        messages: [
           {
-            dia-#:{
-              desayuno: [],
-              almuerzo: [],
-              merienda: [],
-              cena: []
-            },
-            recomendaciones: []
-          }`
-        },
-          {
-            "role": "user",
-           "content": `Generame un plan nutricional de ${days} días segun el siguiente perfil y agrega recomendaciones.\n
-                          ${diet?.age} años, género: ${diet?.gender} peso: ${diet?.weight} libras, meta: ${diet?.weightGoal} libras y mis preferencias son: ${dietPreferencesString}
-                          `},
-      ]
-    });
+            "role": "system",
+            "content": `Eres un nutricionista profesional que crea planes nustricionales y da recomendaciones en formato json(asegurate que el formato esté correcto para parsear y evitar errores). \n
+            Usa la siguiente estructura:
+            {
+              dia-#:{
+                desayuno: [],
+                almuerzo: [],
+                merienda: [],
+                cena: []
+              },
+              recomendaciones: []
+            }`
+          },
+            {
+              "role": "user",
+             "content": `Generame un plan nutricional de ${days} días segun el siguiente perfil y agrega recomendaciones.\n
+                            ${diet?.age} años, género: ${diet?.gender} peso: ${diet?.weight} libras, meta: ${diet?.weightGoal} libras y mis preferencias son: ${dietPreferencesString}
+                            `},
+        ]
+      });
+    
+      const stringRes = response.data.choices[0].message?.content;
+      console.log(stringRes);
+    
+      const jsonRes = JSON.parse(stringRes!);
+      // console.log(jsonRes);
   
-    const stringRes = response.data.choices[0].message?.content;
-    console.log(stringRes);
-  
-    const jsonRes = JSON.parse(stringRes!);
-    // console.log(jsonRes);
-
-    // // Resend the response to the user
-    await resend.emails.send({
-      from: 'diet@mealsensei.app',
-      to: `${diet?.email}`,
-      subject: `🥕 Meal Sensei - Plan nutricional de ${days} días`,
-      text: '',
-      react: EmailTemplate({ plan: jsonRes, days: days })
-      
-    });
-      
-  
-    //here we insert everything in the database
-    if (await prisma.user.findUnique({
-      where: {
-          email: diet?.email
-      }
-    })){
-      console.log("user exists....")
-
-
-      //if user exists we update it
-      await prisma.user.update({
+      // // Resend the response to the user
+      await resend.emails.send({
+        from: 'diet@mealsensei.app',
+        to: `${diet?.email}`,
+        subject: `🥕 Meal Sensei - Plan nutricional de ${days} días`,
+        text: '',
+        react: EmailTemplate({ plan: jsonRes, days: days })
+        
+      });
+        
+    
+      //here we insert everything in the database
+      if (await prisma.user.findUnique({
         where: {
-          email: diet?.email
-        },
-        data:{
-            plan: (days === '7' ? 'weekly' : 'free'),
+            email: diet?.email
         }
-      })
-      await saveAll(payment!, jsonRes, diet!);
+      })){
+        console.log("user exists....")
   
-    } 
-    //else we create it
-    else {
-      console.log("user not exists....")
-
-        await prisma.user.create({
-          data: {
-              email: diet?.email,
-              name: diet?.name,
-              gender: diet?.gender,
-              age: diet?.age,
-              weight: diet?.weight,
-              weightGoal: diet?.weightGoal.toString(),
-              height: diet?.heightFeet + "ft " + diet.heightInches + "in",
-              goal: diet?.dietGoal,
+  
+        //if user exists we update it
+        await prisma.user.update({
+          where: {
+            email: diet?.email
+          },
+          data:{
               plan: (days === '7' ? 'weekly' : 'free'),
-              termsAndConditions: diet?.termsAndConditions,
-              receiveUpdates: diet?.receiveUpdates,
           }
-        });
-        await saveAll(payment!, jsonRes!, diet!);
-    }
+        })
+        await saveAll(payment!, jsonRes, diet!);
+    
+      } 
+      //else we create it
+      else {
+        console.log("user not exists....")
   
-
-    // Respond with the stream
-    return NextResponse.json(
-      //response.data.choices[0].message?.content
-      jsonRes
-  )
+          await prisma.user.create({
+            data: {
+                email: diet?.email,
+                name: diet?.name,
+                gender: diet?.gender,
+                age: diet?.age,
+                weight: diet?.weight,
+                weightGoal: diet?.weightGoal.toString(),
+                height: diet?.heightFeet + "ft " + diet.heightInches + "in",
+                goal: diet?.dietGoal,
+                plan: (days === '7' ? 'weekly' : 'free'),
+                termsAndConditions: diet?.termsAndConditions,
+                receiveUpdates: diet?.receiveUpdates,
+            }
+          });
+          await saveAll(payment!, jsonRes!, diet!);
+      }
+    
+  
+      // Respond with the stream
+      return NextResponse.json(
+        //response.data.choices[0].message?.content
+        jsonRes
+    )
+  }
+  catch (err) {
+    console.log(err);
+  }
+ 
   }
