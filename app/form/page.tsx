@@ -11,11 +11,10 @@ import { FormLayout } from "@/res/components/form-layout"
 import { Welcome } from './steps/welcome'
 
 //* States
-import { formStateAtom, PersonalInfoAtom } from './form-state'
+import { formStateAtom, handleBackArrow, PersonalInfoAtom } from './form-state'
 import { useAtom } from 'jotai'
 import { Suspense, useState } from 'react'
 import { Icon } from '@iconify/react';
-import { Provider as JotaiProvider } from 'jotai'
 
 //* Pages
 import { PersonalInfoPage } from "./steps/personal-info"
@@ -25,8 +24,11 @@ import { DietTypePage } from './steps/diet-type'
 import {PaymentPage} from './steps/payment'
 
 const StepForm = () => {
-    const [formState, setActiveStep] = useAtom(formStateAtom)
-
+    const [formState, setActiveStep] = useState({
+      activeStep: 0,
+    })
+    const [form, setForm] = useAtom(formStateAtom)
+  const [backArrow, setHandleBackArrow] = useAtom(handleBackArrow)
     const [personalInfo] = useAtom(PersonalInfoAtom)
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -88,7 +90,6 @@ const StepForm = () => {
       }
 
     return (
-        <JotaiProvider>
 
                 <FormLayout>
 
@@ -107,7 +108,16 @@ const StepForm = () => {
                 <Grid container alignItems={"center"} spacing={2}>
                   <Grid item xs={4}>
                     <Tooltip title="Regresar" placement="bottom">
-                    <IconButton onClick={handleBack} {...(formState.activeStep === 0 && { disabled : true})} sx={{
+                    <IconButton onClick={()=>{
+                      if(formState.activeStep > 0){
+                        handleBack()
+                      }
+                      else{
+                        window.location.href = "/"
+                      }
+                    }} 
+                    disabled={backArrow}
+                    sx={{
                       color: '#000',
                     }}>         
                       <Icon icon="solar:arrow-left-outline" />
@@ -182,7 +192,7 @@ const StepForm = () => {
                 </FormLayout>
 
 
-        </JotaiProvider>
+
 
     )
 }

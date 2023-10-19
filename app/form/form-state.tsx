@@ -24,6 +24,7 @@ export const formStateAtom = atomWithStorage('formState',{
 })
 
 
+export const handleBackArrow = atom(false)
 
 
 export const PersonalInfoAtom = atomWithStorage('personalInfo',{
@@ -47,7 +48,6 @@ export const PersonalInfoAtom = atomWithStorage('personalInfo',{
     heightType: 'pies',
 
     //* Diet Preferences
-    hola:"hola",
     dietPreferences: [
         {name: "Soy Vegano (a)", checked: false },
         {name: "Soy Vegetariano (a)", checked: false },
