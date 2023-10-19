@@ -13,6 +13,7 @@ import { FormCheckbox } from "@/res/components/checkbox"
 const schema = yup.object().shape({
     name: yup.string().required('Nombre es requerido'),
     email: yup.string().email('Correo electrónico inválido').required('Correo Electrónico es requerido'),
+    emailConfirmation: yup.string().oneOf([yup.ref('email')], 'Los correos electrónicos deben coincidir').required('Confirmar Correo Electrónico es requerido'),
     age: yup.number().required('Edad es requerida').min(18, 'Minimo 18 años').max(99, 'Máximo 99 años').integer('Edad inválida').typeError('Edad inválida'),
     gender: yup.string().required('Género es requerido'),
     termsAndConditions: yup.boolean().required('Términos y condiciones es requerido').oneOf([true], 'Términos y condiciones es requerido'),
@@ -53,6 +54,14 @@ export const PersonalInfoPage = ({handleNext}: any) => {
                 type='email'
                 control={control}
                 rules={{ required:  "Correo Electrónico es requerido", pattern: {value: /\S+@\S+\.\S+/, message: "Correo Electrónico inválido"}}}
+            />
+
+            <FormInput
+                id='emailConfirmation'
+                label='Confirmar Correo Electrónico *'
+                type='email'
+                control={control}
+                rules={{ required:  "Correo Electrónico es requerido"}}
             />
             
             <FormInput

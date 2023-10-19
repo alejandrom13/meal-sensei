@@ -12,6 +12,8 @@ import { set } from "react-hook-form";
 import { TransitionProps } from "@mui/material/transitions";
 import React from "react";
 import { get } from "http";
+import { LoadingAnimation } from "@/res/components/loading-animation";
+import CoolDialog from "@/res/components/CoolDialog";
 
 
 const coolMessages = [
@@ -143,12 +145,10 @@ export const PaymentPage = ({handleNext}:any) => {
             onApprove={async (data, actions)=>{
                 
                 const order = await actions.order?.capture().then((data)=>{
-                    setLoading(true);
+                    handleClickOpen();
                    
                     sendData(personalInfo, data, '7').then((data)=>{
                             router.push('/form/success');
-                    }).then(()=>{
-                        setLoading(false);
                     })
 
                 })
@@ -189,58 +189,7 @@ export const PaymentPage = ({handleNext}:any) => {
 
           </Card>
 
-          <Dialog
-        open={open}
-        TransitionComponent={Transition}
-             fullScreen
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        sx={{
-            '& .MuiDialog-paper': {
-                backgroundColor: '#FDFCF5',
-                boxShadow: 'none',
-            }
-        
-        }}
-      >
-        <DialogContent>
-        <div>
-
-        <Box sx={{  mt: 10, mb: 0, padding: 2}}>
-  
-  <Container maxWidth='sm'
-    sx={{
-      pt: 1,
-      pb: 2,
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      textAlign: 'center',
-
-    }}>
-
-  <CircularProgress size={110} thickness={0.5} sx={{
-      color: '#000',
-      mb: 3}} />
-
-  <Typography sx={{ color: '', mt: 0, mb: 3, fontSize:'24px', fontWeight:'300' }}>
-  ¡Estamos creando tu plan nutricional!
-    </Typography>
-    <Alert sx={{
-        
-    }} severity="warning">No cierres la pagina.</Alert>
-
-  </Container>
-    
-
-</Box>
-        
-        </div> 
-        </DialogContent>
-
-      </Dialog>
-
+          <CoolDialog open={open} />
      
 
 
