@@ -42,7 +42,7 @@ const handleClose = () => {
         
         }}>
             <MSIconButton handleClick={async ()=>{
-                const textToCopy = `https://mealsensei.com/`;
+                const textToCopy = `https://mealsensei.app/`;
 
                 await navigator.clipboard.writeText(textToCopy).then(() => {
                     setOpen(true);
