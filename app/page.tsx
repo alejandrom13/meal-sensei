@@ -34,26 +34,6 @@ function initializeClarity() {
 export default function Home() {
   initializeClarity();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const data = Object.fromEntries(formData.entries())
-
-   await fetch('/api/ai', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-
-      },
-      body: JSON.stringify({
-        prompt: data,
-      }),
-    })
-    
-
-    console.log(data)
-  }
-
   return (
     <main>
 

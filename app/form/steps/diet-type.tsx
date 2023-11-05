@@ -36,7 +36,7 @@ export const DietTypePage = ({handleNext}:any) => {
     return (
         <div>
             <h1>Selección de Dieta</h1>
-            <Typography variant='body1' color={'grey'}>Sigues alguna de estas dietas?</Typography>
+            <Typography variant='body1' color={'grey'}>Sigues alguna de estas dietas? (opcional *)</Typography>
 
             <br/>
 

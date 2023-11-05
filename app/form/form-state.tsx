@@ -1,5 +1,6 @@
 import {atom} from 'jotai'
 import {atomWithStorage, loadable} from 'jotai/utils'
+import { bool, string } from 'yup'
 
 export const formStateAtom = atomWithStorage('formState',{
 
@@ -41,10 +42,19 @@ export const PersonalInfoAtom = atomWithStorage('personalInfo',{
     dietGoal: 'Perder Peso',
 
     //* Body Measurements
+    selectedMesurement: null as unknown as number,
     heightFeet: null as unknown as number,
     heightInches: null as unknown as number,
     weight: null as unknown as number,
     weightGoal: null as unknown as number,
+
+    //* Diet Preferences for CM and KG
+    heightCm: null as unknown as number,
+    weightKg: null as unknown as number,
+    weigthGoalKg: null as unknown as number,
+
+    budget: '',
+
     weightType: 'libras',
     heightType: 'pies',
 

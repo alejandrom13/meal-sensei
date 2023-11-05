@@ -15,16 +15,16 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: {
-    default: 'MealSensei - Dietas personalizadas con IA',
+    default: 'Meal Sensei - Dietas personalizadas con IA',
     template: '%s'
   },
-  description: 'MealSensei es una plataforma que te permite crear dietas personalizadas con inteligencia artificial.',
+  description: 'Meal Sensei es una plataforma que te permite crear dietas personalizadas con inteligencia artificial.',
   robots: 'Just crawl it',
   openGraph: {
     type: 'website',
     locale: 'es_DO',
-    title: 'MealSensei - Dietas personalizadas con IA',
-    description: 'MealSensei es una plataforma que te permite crear dietas personalizadas con inteligencia artificial.',
+    title: 'Meal Sensei - Dietas personalizadas con IA',
+    description: 'Meal Sensei es una plataforma que te permite crear dietas personalizadas con inteligencia artificial.',
     url: 'https://mealsensei.app',
     images: [
       {

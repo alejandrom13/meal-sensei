@@ -24,6 +24,9 @@ import { DietTypePage } from './steps/diet-type'
 import {PaymentPage} from './steps/payment'
 
 const StepForm = () => {
+  //for animations
+  const [x, setX] = useState(500);
+
     const [formState, setActiveStep] = useState({
       activeStep: 0,
     })
@@ -41,6 +44,7 @@ const StepForm = () => {
     };
 
     const handleNext = () => {
+      setX(500)
       setActiveStep({
         ...formState,
         activeStep: formState.activeStep + 1,
@@ -48,6 +52,7 @@ const StepForm = () => {
     }
   
     const handleBack = () => {
+      setX(-500)
         setActiveStep({
             ...formState,
             activeStep: formState.activeStep - 1,
@@ -70,9 +75,9 @@ const StepForm = () => {
             // case 0:
             //     return <Welcome handleNext={handleNext}/>
           case 0:
-            return <PersonalInfoPage handleNext={handleNext}/>
+            return <PersonalInfoPage handleNext={handleNext} x={x} setX={setX}/>
           case 1:
-            return <DietGoalPage handleNext={handleNext}/>
+            return <DietGoalPage handleNext={handleNext} x={x} setX={setX}/>
           case 2:
             return <BodyMeasurementsPage handleNext={handleNext}/>
           case 3:
@@ -111,6 +116,7 @@ const StepForm = () => {
                     <IconButton onClick={()=>{
                       if(formState.activeStep > 0){
                         handleBack()
+                        
                       }
                       else{
                         window.location.href = "/"

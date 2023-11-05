@@ -8,6 +8,8 @@ import { FormSelect } from "@/res/components/select"
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { FormCheckbox } from "@/res/components/checkbox"
+import { motion } from "framer-motion"
+import { useState } from "react"
 
 
 const schema = yup.object().shape({
@@ -17,11 +19,12 @@ const schema = yup.object().shape({
     age: yup.number().required('Edad es requerida').min(18, 'Minimo 18 años').max(99, 'Máximo 99 años').integer('Edad inválida').typeError('Edad inválida'),
     gender: yup.string().required('Género es requerido'),
     termsAndConditions: yup.boolean().required('Términos y condiciones es requerido').oneOf([true], 'Términos y condiciones es requerido'),
-    receiveUpdates: yup.boolean()
+    receiveUpdates: yup.boolean(),
+    budget: yup.string().required('Presupuesto es requerido'),
 })
 
-export const PersonalInfoPage = ({handleNext}: any) => {
-    
+export const PersonalInfoPage = ({handleNext, x}: any) => {
+
     const [personalInfo, setFormState] = useAtom(PersonalInfoAtom)
 
     const { control, handleSubmit, formState: {errors} } = useForm({
@@ -35,7 +38,9 @@ export const PersonalInfoPage = ({handleNext}: any) => {
     }
 
     return (
-        <div>
+        <motion.div
+
+        >
         <h1>Ingresa tus datos</h1>
         <br/>
 
@@ -89,6 +94,21 @@ export const PersonalInfoPage = ({handleNext}: any) => {
                 <MenuItem value={'Femenino'}>Femenino</MenuItem>
 
             </FormSelect>
+
+            <FormSelect
+                id="budget"
+                label="Selecciona tu presupuesto *"
+                control={control}
+                rules={{ required: "Presupuesto es requerido" }}
+                //placeholder="Selecciona tu género"
+
+            >
+                <MenuItem value={'Bajo'}>Bajo</MenuItem>
+                <MenuItem value={'Medio'}>Medio</MenuItem>
+                <MenuItem value={'Alto'}>Alto</MenuItem>
+
+
+            </FormSelect>
 {/* 
             <table>
                 <tr>
@@ -124,7 +144,7 @@ export const PersonalInfoPage = ({handleNext}: any) => {
         </form>
 
 
-        </div>
+        </motion.div>
     )
 }
 
