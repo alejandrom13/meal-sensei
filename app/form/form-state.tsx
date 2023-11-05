@@ -42,7 +42,7 @@ export const PersonalInfoAtom = atomWithStorage('personalInfo',{
     dietGoal: 'Perder Peso',
 
     //* Body Measurements
-    selectedMesurement: null as unknown as number,
+    selectedMesurement: 0,
     heightFeet: null as unknown as number,
     heightInches: null as unknown as number,
     weight: null as unknown as number,
