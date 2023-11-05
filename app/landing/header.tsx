@@ -19,8 +19,8 @@ export const LandingHeader = () => {
             }}>
                 <Grid item xs={12} md={6}>
                     <div>
-                        <h1 style={{ fontSize: '40px', fontWeight: 'bold', color: '#000', lineHeight: '1.2' }}>Dile adiós a las dietas genéricas</h1>
-                        <p style={{ fontSize: '16px', fontWeight: 'normal', color: '#00000099', lineHeight: '1.5' }}>Obtén un plan alimenticio personalizado basado en inteligencia artificial para una alimentación saludable y equilibrada, diseñado especialmente para ti.</p>
+                        <h1 style={{ fontSize: '40px', fontWeight: 'bold', color: '#000', lineHeight: '1.2', textAlign:'center' }}>Dile adiós a las dietas genéricas</h1>
+                        <p style={{ fontSize: '17px', fontWeight: '300', color: '#00000099', lineHeight: '1.5', textAlign:'center' }}>Obtén un plan alimenticio personalizado basado en inteligencia artificial para una alimentación saludable y equilibrada, diseñado especialmente para ti.</p>
                         <LandingButton onClick={()=>{
                             router.push('/form');
                         }} fullWidth>Empezar Ahora</LandingButton>

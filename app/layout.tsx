@@ -49,8 +49,13 @@ export default function RootLayout({
         WebkitTapHighlightColor: 'transparent',
       }}>{children}</body>
 
-      
-      <script src="//code.tidio.co/hloxn0ikzk1gofdydbknhy8tsaugibff.js" async></script>
-    </html>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4216322039607935"
+     crossOrigin="anonymous"></script>
+     
+     <script src="//code.tidio.co/hloxn0ikzk1gofdydbknhy8tsaugibff.js" async></script>    
+     
+     
+     
+     </html>
   )
 }
