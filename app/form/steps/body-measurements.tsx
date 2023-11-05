@@ -6,6 +6,7 @@ import { useAtom } from "jotai"
 import { FormButton } from "@/res/components/button"
 import { PersonalInfoAtom } from "../form-state"
 import { useForm } from "react-hook-form"
+import  RadioTab  from "@/res/components/radioTab"
 
 const schema = yup.object().shape({
     heightFeet: yup.number().required('Altura es requerida').min(3, '"Altura debe ser mayor a 3').max(9, 'Altura debe ser menor a 9').integer('Altura inválida').typeError('Altura inválida'),
@@ -36,71 +37,7 @@ export const BodyMeasurementsPage = ({handleNext}:any) => {
         <br/>
 
 
-
-        <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
-
-            <Grid container spacing={2}>
-                <Grid item xs={6}>
-                    <FormInput
-                        id='heightFeet'
-                        label='Altura *'
-                        type='number'
-                        control={control}
-                        adornment="Pies"
-                        shrink
-                        placeholder="Altura"
-                        rules={{ required: 'Altura es requerida', maxLength: 1 }}
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <FormInput
-                        id='heightInches'
-                        label=''
-                        type='number'
-                        control={control}
-                        
-                        adornment="Pulgadas"
-                        rules={{ required: 'Altura es requerida' }}
-                    />
-
-                </Grid>
-                
-            </Grid>
-
-            <FormInput
-                id='weight'
-                label='Peso *'
-                type='number'
-                control={control}
-                adornment="Libras"
-                shrink
-                placeholder="Peso"
-                rules={{ required: 'Peso es requerido' }}
-            />
-
-            <FormInput
-                id='weightGoal'
-                label='Meta de Peso *'
-                type='number'
-                control={control}
-                adornment="Libras"
-                shrink
-                placeholder="Meta de Peso"
-                rules={{ required: 'Peso es requerido' }}
-            />
-
-            <Stack sx={{ width: '100%', pb: 2, pt:0 }} spacing={2}>
-                
-            <Alert severity="info" sx={{
-             
-            }}>
-                <AlertTitle>Midiendo tu IMC</AlertTitle>
-                Usaremos estos datos para medir tu <strong>Índice de masa corporal</strong>. Se usa para identificar las categorías de peso que pueden llevar a problemas de salud.</Alert>
-
-        </Stack>
-
-            <FormButton onClick={handleSubmit(onSubmit)}>Continuar</FormButton>
-        </form>
+        <RadioTab handleNext={handleNext}></RadioTab>
 
 
 

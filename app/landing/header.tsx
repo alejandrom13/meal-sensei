@@ -23,7 +23,7 @@ export const LandingHeader = () => {
                         <p style={{ fontSize: '16px', fontWeight: 'normal', color: '#00000099', lineHeight: '1.5' }}>Obtén un plan alimenticio personalizado basado en inteligencia artificial para una alimentación saludable y equilibrada, diseñado especialmente para ti.</p>
                         <LandingButton onClick={()=>{
                             router.push('/form');
-                        }}>Empezar Ahora</LandingButton>
+                        }} fullWidth>Empezar Ahora</LandingButton>
                     </div>
                 </Grid>
                 <Grid item xs={12} md={6} >

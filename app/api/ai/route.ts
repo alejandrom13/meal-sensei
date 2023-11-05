@@ -19,8 +19,11 @@ export interface IDiet {
   heightInches: string;
   weight: number;
   weightGoal: string;
-  weightType: string;
-  heightType: string;
+  heightCm: string;
+  weightKg: string;
+  weigthGoalKg: string;
+  budget: string;
+  selectedMesurement: number;
   dietPreferences: [
     {
       name: string;
@@ -110,6 +113,17 @@ export async function POST(req: Request) {
   const payment = await data.payment;
   const days = data.dietDays;
 
+  const dietPreferencesString = diet?.dietPreferences.filter(item => item.checked === true)
+  .map(item => item.name)
+  .join(', ');
+  
+  
+  const weightType = diet?.selectedMesurement === 0 ? 'libras' : 'kg';
+
+  console.log("WEIGHT TYPE: ", weightType)
+  console.log(`generame un plan, el tipo de peso es: ${weightType}, presupuesto: ${diet.budget} y los datos son, peso: ${diet.selectedMesurement === 0 ? diet.weight : diet.weightKg}, meta: ${diet.selectedMesurement === 0 ? diet.weightGoal : diet.weigthGoalKg} y altura: ${diet.selectedMesurement === 0 ? diet.heightFeet + "Pies " + diet.heightInches + "pulgadas" : diet.heightCm + "cm"} ${dietPreferencesString !== "" ? "y mis preferencias son: "+ dietPreferencesString : ""}`)
+
+
   const isFree = await isFreeUser(diet?.email);
 
 
@@ -120,10 +134,6 @@ export async function POST(req: Request) {
     )
   }
   
-const dietPreferencesString = diet?.dietPreferences.filter(item => item.checked === true)
-                                                   .map(item => item.name)
-                                                   .join(', ');
-
 
 
   try {
@@ -152,9 +162,17 @@ const dietPreferencesString = diet?.dietPreferences.filter(item => item.checked 
             {
               "role": "user",
              "content": `Generame un plan nutricional de ${days} días segun el siguiente perfil y agrega recomendaciones.\n
-                            ${diet?.age} años, género: ${diet?.gender} peso: ${diet?.weight} libras, meta: ${diet?.weightGoal} libras y mis preferencias son: ${dietPreferencesString}
+                            ${diet?.age} años, género: ${diet?.gender}, peso: ${diet.selectedMesurement === 0 ? diet.weight : diet.weightKg} ${weightType}, meta: ${diet.selectedMesurement === 0 ? diet.weightGoal : diet.weigthGoalKg} ${weightType}, altura: ${diet.selectedMesurement === 0 ? diet.heightFeet + " Pies " + diet.heightInches + " Pulgadas" : diet.heightCm + "cm"}, presupuesto: ${diet.budget} ${dietPreferencesString !== "" ? "y mis preferencias son: "+ dietPreferencesString : ""}
                             `},
         ]
+      })
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err;
       });
     
       const stringRes = response.data.choices[0].message?.content;

@@ -5,6 +5,7 @@ interface ButtonProps {
     disabled?: boolean,
     children: React.ReactNode
     type?: 'submit' | 'button' | 'reset' | undefined
+    fullWidth?: boolean
     onClick?: () => any
 }
 
@@ -14,6 +15,7 @@ export const LandingButton = (props:ButtonProps) => {
         variant="contained"
         size="large"
         //size="small"
+        fullWidth={props.fullWidth}
         onClick={props.onClick}
         sx={{ borderRadius: '10px', 
                 boxShadow: 'none', 

@@ -7,9 +7,11 @@ import Icon2 from '@/res/svg/form/goal2.svg'
 import Icon3 from '@/res/svg/form/goal3.svg'
 import { PersonalInfoAtom } from "../form-state";
 import { useAtom } from "jotai";
+import { delay, motion } from "framer-motion";
+import { stagger, animate } from "framer-motion"
 
 
-export const DietGoalPage = ({handleNext}:any) => {
+export const DietGoalPage = ({handleNext, x}:any) => {
 
     const [dietGoal, setDietGoal] = useAtom(PersonalInfoAtom);
     const value = dietGoal.dietGoal;    
@@ -20,8 +22,10 @@ export const DietGoalPage = ({handleNext}:any) => {
 
     
     return (
-        <div>
-            <h1>Cuál es tu meta?</h1>
+        <motion.div
+ 
+        >
+            <h1 id="title-example" className="title-example">Cuál es tu meta?</h1>
             <Typography variant='body1' color={'grey'}>Elige la meta que deseas lograr</Typography>
 
             <br/>
@@ -54,6 +58,6 @@ export const DietGoalPage = ({handleNext}:any) => {
                     />
 
             <FormButton onClick={handleNext}>Continuar</FormButton>
-        </div>
+        </motion.div>
     )
 }
